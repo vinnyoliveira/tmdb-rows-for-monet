@@ -90,6 +90,7 @@ import com.ptvin.tmdbrows.data.RowConfig
 import com.ptvin.tmdbrows.data.Tmdb
 import com.ptvin.tmdbrows.data.TmdbItem
 import com.ptvin.tmdbrows.data.TmdbProvider
+import com.ptvin.tmdbrows.data.Update
 
 /** Botão com foco na cor do tema (o padrão do tv-material fica branco). */
 @Composable
@@ -605,6 +606,66 @@ fun AppLanguageChips(selected: String, onSelect: (String) -> Unit) {
         selected = selected,
         onSelect = onSelect,
     )
+}
+
+/**
+ * Aviso de nova versão: descarrega o APK e abre o instalador do sistema.
+ * Fecha com "Agora não" (fica ignorada até sair outra versão).
+ */
+@Composable
+fun UpdateOverlay(
+    update: Update,
+    installing: Boolean,
+    error: String?,
+    onInstall: () -> Unit,
+    onLater: () -> Unit,
+) {
+    val installFocus = remember { FocusRequester() }
+    LaunchedEffect(Unit) { installFocus.requestFocus() }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.76f))
+            .padding(horizontal = 80.dp, vertical = 48.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Panel(modifier = Modifier.widthIn(max = 900.dp)) {
+            Text(
+                stringResource(R.string.update_title, update.version),
+                style = MaterialTheme.typography.headlineSmall,
+            )
+            Spacer(Modifier.height(12.dp))
+            Text(
+                stringResource(R.string.update_body),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                stringResource(R.string.update_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(20.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                TvButton(
+                    onClick = onInstall,
+                    enabled = !installing,
+                    modifier = Modifier.focusRequester(installFocus),
+                ) {
+                    Text(
+                        stringResource(
+                            if (installing) R.string.update_downloading else R.string.update_install,
+                        ),
+                    )
+                }
+                TvOutlinedButton(onClick = onLater, enabled = !installing) {
+                    Text(stringResource(R.string.update_later))
+                }
+            }
+            StatusLine(error, error = true)
+        }
+    }
 }
 
 /** Tutorial curto por cima do ecrã; abre pelo botão "?" e fecha com Voltar. */

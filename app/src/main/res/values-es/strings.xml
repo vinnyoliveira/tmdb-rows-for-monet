@@ -103,6 +103,13 @@
     <string name="card_badge_episodes">Sello de nuevo episodio</string>
     <string name="card_badge_episodes_hint">Durante 3 días tras un episodio. Solo en series.</string>
     <string name="cards_apply_hint">Se aplica la próxima vez que publiques.</string>
+    <string name="update_title">Nueva versión %1$s</string>
+    <string name="update_body">Descárgala e instálala encima de esta. Tus filas, clave y ajustes se mantienen.</string>
+    <string name="update_hint">Android puede pedirte permiso para instalar desde esta app.</string>
+    <string name="update_install">Descargar e instalar</string>
+    <string name="update_later">Ahora no</string>
+    <string name="update_downloading">Descargando…</string>
+    <string name="update_error">No se pudo descargar la actualización.</string>
     <string name="label_ids">Títulos por ID de TMDB</string>
     <string name="ids_placeholder">550, 1399 o un enlace de themoviedb.org</string>
     <string name="ids_hint">Uno por línea. También acepta enlaces del sitio.</string>

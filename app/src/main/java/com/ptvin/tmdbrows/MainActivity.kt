@@ -15,6 +15,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,12 +29,15 @@ import com.ptvin.tmdbrows.channel.ChannelRefresher
 import com.ptvin.tmdbrows.data.Prefs
 import com.ptvin.tmdbrows.data.RowConfig
 import com.ptvin.tmdbrows.data.Rows
+import com.ptvin.tmdbrows.data.Update
+import com.ptvin.tmdbrows.data.Updates
 import com.ptvin.tmdbrows.ui.EditorScreen
 import com.ptvin.tmdbrows.ui.HelpOverlay
 import com.ptvin.tmdbrows.ui.HomeScreen
 import com.ptvin.tmdbrows.ui.RowsTheme
 import com.ptvin.tmdbrows.ui.SettingsScreen
 import com.ptvin.tmdbrows.ui.SetupScreen
+import com.ptvin.tmdbrows.ui.UpdateOverlay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -97,11 +101,23 @@ private fun App() {
     }
     var editing by remember { mutableStateOf<RowConfig?>(null) }
     var help by remember { mutableStateOf(false) }
+    var update by remember { mutableStateOf<Update?>(null) }
+    var installing by remember { mutableStateOf(false) }
+    var updateError by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+        if (Prefs.tmdbKey(context).isNotBlank()) {
+            update = withContext(Dispatchers.IO) {
+                runCatching { Updates.check(context, BuildConfig.VERSION_NAME) }.getOrNull()
+            }
+        }
+    }
 
     BackHandler(enabled = help) { help = false }
     BackHandler(enabled = !help && (screen == Screen.EDITOR || screen == Screen.SETTINGS)) {
         screen = Screen.HOME
     }
+    BackHandler(enabled = update != null) { update = null }
 
     Box(Modifier.fillMaxSize()) {
         AnimatedContent(
@@ -149,5 +165,29 @@ private fun App() {
         }
 
         HelpOverlay(visible = help, onClose = { help = false })
+
+        update?.let { found ->
+            UpdateOverlay(
+                update = found,
+                installing = installing,
+                error = updateError,
+                onInstall = {
+                    installing = true
+                    updateError = null
+                    scope.launch {
+                        runCatching {
+                            withContext(Dispatchers.IO) { Updates.downloadAndInstall(context, found) }
+                        }.onFailure {
+                            updateError = it.message ?: context.getString(R.string.update_error)
+                        }
+                        installing = false
+                    }
+                },
+                onLater = {
+                    Prefs.setIgnoredVersion(context, found.version)
+                    update = null
+                },
+            )
+        }
     }
 }

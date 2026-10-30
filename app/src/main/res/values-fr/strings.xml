@@ -103,6 +103,13 @@
     <string name="card_badge_episodes">Sceau de nouvel épisode</string>
     <string name="card_badge_episodes_hint">Pendant 3 jours après un épisode. Séries uniquement.</string>
     <string name="cards_apply_hint">Appliqué à la prochaine publication.</string>
+    <string name="update_title">Nouvelle version %1$s</string>
+    <string name="update_body">Télécharge-la et installe-la par-dessus. Tes rangées, clé et réglages restent.</string>
+    <string name="update_hint">Android peut demander autorisation pour installer depuis cette app.</string>
+    <string name="update_install">Télécharger et installer</string>
+    <string name="update_later">Plus tard</string>
+    <string name="update_downloading">Téléchargement…</string>
+    <string name="update_error">Impossible de télécharger la mise à jour.</string>
     <string name="label_ids">Titres par ID TMDB</string>
     <string name="ids_placeholder">550, 1399 ou un lien themoviedb.org</string>
     <string name="ids_hint">Un par ligne. Les liens du site sont acceptés.</string>

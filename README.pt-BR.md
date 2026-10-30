@@ -36,6 +36,8 @@ Guia completo: [Português](docs/tutorial.pt-BR.md) · [English](docs/tutorial.m
   ano, gênero) no idioma escolhido, mais um selo dourado `NOVO` para lançamentos de 15 dias e um selo
   azul `NOVO EPISÓDIO` para séries com episódio nos últimos 3 dias. Cada um pode ser desligado em
   Ajustes → Cartões.
+- **Atualizações na app** — quando sai uma versão nova, a app oferece descarregar e instalar (o
+  Android pede sempre confirmação).
 
 ## Instalar
 

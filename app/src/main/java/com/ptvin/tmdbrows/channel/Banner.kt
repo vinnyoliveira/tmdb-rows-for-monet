@@ -41,10 +41,10 @@ object Banner {
     private const val LEFT = 72f
     private const val ROW_NAME_X = 108f
     private const val ROW_NAME_SIZE = 40f
-    private const val TITLE_SIZE = 60f
-    private const val TAG_SIZE = 26f
-    private const val LOGO_H = 150f
-    private const val BAND_H = 76f
+    private const val TITLE_SIZE = 76f
+    private const val TAG_SIZE = 36f
+    private const val LOGO_H = 210f
+    private const val BAND_H = 88f
 
     private data class Ribbon(val label: String, val start: Int, val end: Int)
 
@@ -135,7 +135,7 @@ object Banner {
     ): String {
         val suffix = category?.takeIf { it.isNotBlank() }?.let { "-c${it.hashCode()}" }.orEmpty()
         // Muda com o desenho do cartão: garante que os antigos são refeitos uma vez.
-        return "${row.id}-${item.id}$suffix$posterTag-d3.jpg"
+        return "${row.id}-${item.id}$suffix$posterTag-d4.jpg"
     }
 
     /** Marca do cartaz: muda com o id do IMDb e com o idioma, para não servir o antigo. */
@@ -196,6 +196,8 @@ object Banner {
     ): Bitmap {
         val out = Bitmap.createBitmap(W, H, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(out)
+        // Pincel só para imagens: não herda cor/alpha dos scrims (senão o logo sai transparente).
+        val art = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
         val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
 
         // backdrop em cover
@@ -206,7 +208,7 @@ object Banner {
             backdrop,
             null,
             RectF((W - dw) / 2f, (H - dh) / 2f, (W + dw) / 2f, (H + dh) / 2f),
-            paint,
+            art,
         )
 
         // Scrim da esquerda e faixa de baixo: iguais em todos os cartões.
@@ -217,21 +219,21 @@ object Banner {
         )
         canvas.drawRect(0f, 0f, W * 0.62f, H.toFloat(), paint)
         paint.shader = LinearGradient(
-            0f, H - 210f, 0f, H - BAND_H,
+            0f, H - 230f, 0f, H - BAND_H,
             Color.TRANSPARENT, Color.argb(235, 6, 8, 14),
             Shader.TileMode.CLAMP,
         )
-        canvas.drawRect(0f, H - 210f, W.toFloat(), H - BAND_H, paint)
+        canvas.drawRect(0f, H - 230f, W.toFloat(), H - BAND_H, paint)
         paint.shader = null
         paint.color = Color.argb(235, 6, 8, 14)
         canvas.drawRect(0f, H - BAND_H, W.toFloat(), H.toFloat(), paint)
-        paint.color = Color.argb(26, 255, 255, 255)
+        paint.color = Color.argb(30, 255, 255, 255)
         canvas.drawRect(0f, H - BAND_H, W.toFloat(), H - BAND_H + 1.5f, paint)
 
         val cover = !category.isNullOrBlank()
 
         if (cover) {
-            // Capa: nome da linha na vertical, como marca d'água, sempre no mesmo corpo.
+            // Capa: nome da linha na vertical, sempre no mesmo corpo.
             val name = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 color = Color.argb(235, 234, 239, 255)
                 textSize = ROW_NAME_SIZE
@@ -252,21 +254,22 @@ object Banner {
         val titleWidth = W - textLeft - LEFT
 
         if (withTitle) {
-            if (logo != null && !cover) {
-                val s = min(W * 0.5f / logo.width, LOGO_H / logo.height)
+            if (logo != null) {
+                // A arte do título também aparece na capa, no mesmo tamanho dos outros cartões.
+                val s = min(titleWidth / logo.width, LOGO_H / logo.height)
                 val lw = logo.width * s
                 val lh = logo.height * s
-                val centerY = H * 0.44f
+                val centerY = (H - BAND_H) / 2f
                 canvas.drawBitmap(
                     logo,
                     null,
-                    RectF(LEFT, centerY - lh / 2f, LEFT + lw, centerY + lh / 2f),
-                    paint,
+                    RectF(textLeft, centerY - lh / 2f, textLeft + lw, centerY + lh / 2f),
+                    art,
                 )
             } else {
-                // Sem logo: título em marca d'água, mesmo corpo na capa e nos restantes.
+                // Sem logo: título grande, igual na capa e nos restantes.
                 val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                    color = Color.argb(232, 242, 244, 250)
+                    color = Color.argb(250, 245, 247, 255)
                     textSize = TITLE_SIZE
                     typeface = Typeface.create("sans-serif", Typeface.BOLD)
                 }
@@ -279,29 +282,42 @@ object Banner {
             }
         }
 
-        drawTags(canvas, badges, LEFT)
+        drawTags(canvas, badges)
         if (ribbon != null) drawRibbon(canvas, ribbon, LEFT)
         return out
     }
 
-    /** Etiquetas na faixa de baixo, com separadores: legíveis e sempre no mesmo sítio. */
-    private fun drawTags(canvas: Canvas, badges: List<String>, left: Float) {
+    /**
+     * Etiquetas na faixa de baixo: letras grandes, em maiúsculas, repartidas por toda a largura
+     * (a primeira à esquerda, a última à direita).
+     */
+    private fun drawTags(canvas: Canvas, badges: List<String>) {
         if (badges.isEmpty()) return
+        val labels = badges.map { it.uppercase() }
         val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             textSize = TAG_SIZE
             typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         }
-        val dot = Paint(text).apply { color = Color.argb(110, 255, 255, 255) }
-        val baseline = H - 27f
-        var x = left
-        badges.forEachIndexed { index, label ->
-            if (index > 0) {
-                canvas.drawText("·", x, baseline, dot)
-                x += dot.measureText("·") + 12f
+        val available = W - LEFT * 2f
+        var widths = labels.map { text.measureText(it) }
+        var total = widths.sum()
+        // Se não couber, reduz o corpo o mínimo necessário (nunca sobrepõe).
+        if (total > available && labels.size > 1) {
+            text.textSize = TAG_SIZE * (available / total)
+            widths = labels.map { text.measureText(it) }
+            total = widths.sum()
+        }
+        val baseline = H - 33f
+        val gap = if (labels.size > 1) (available - total) / (labels.size - 1) else 0f
+        var x = LEFT
+        labels.forEachIndexed { index, label ->
+            text.color = if (index == 0) {
+                Color.parseColor("#DCE4FF")
+            } else {
+                Color.argb(232, 236, 240, 255)
             }
-            text.color = if (index == 0) Color.parseColor("#D6DEFF") else Color.argb(225, 232, 236, 255)
             canvas.drawText(label, x, baseline, text)
-            x += text.measureText(label) + 12f
+            x += widths[index] + gap
         }
     }
 

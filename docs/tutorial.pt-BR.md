@@ -117,7 +117,9 @@ quiseres que as linhas se mantenham frescas sozinhas.
 
 ## 10. Atualizar a app
 
-Instala o APK novo por cima do antigo (mesma assinatura). As linhas e a chave ficam. Se desinstalar,
+Quando sai uma versão nova, a app mostra um aviso com o número da versão e o botão **Descarregar e
+instalar**: descarrega o APK, entrega-o ao Android e o sistema pede confirmação. As linhas e a chave
+ficam. Também podes instalar um APK novo à mão por cima do antigo (mesma assinatura). Se desinstalar,
 os canais e as definições desaparecem.
 
 ## Problemas comuns

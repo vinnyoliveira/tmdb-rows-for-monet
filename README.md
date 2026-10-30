@@ -35,6 +35,8 @@ Full guide: [English](docs/tutorial.md) · [Português](docs/tutorial.pt-BR.md).
   genre) in the chosen language, plus a gold `NEW` ribbon for 15-day releases and a blue
   `NEW EPISODE` ribbon for series that aired in the last 3 days. Each of these can be turned off in
   Settings → Cards.
+- **In-app updates** — when a new release is out, the app offers to download and install it (Android
+  still asks for confirmation).
 
 ## Install
 

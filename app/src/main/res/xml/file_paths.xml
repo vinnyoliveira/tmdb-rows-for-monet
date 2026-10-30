@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- APK da atualização, descarregado para a cache da app. -->
+    <cache-path
+        name="updates"
+        path="update/" />
+</paths>

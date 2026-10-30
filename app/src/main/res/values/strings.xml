@@ -103,6 +103,13 @@
     <string name="card_badge_episodes">New episode badge</string>
     <string name="card_badge_episodes_hint">For 3 days after an episode airs. Series only.</string>
     <string name="cards_apply_hint">Applied the next time the rows are published.</string>
+    <string name="update_title">New version %1$s</string>
+    <string name="update_body">Download it and install over this one. Your rows, key and settings stay.</string>
+    <string name="update_hint">Android may ask you to allow installs from this app.</string>
+    <string name="update_install">Download and install</string>
+    <string name="update_later">Later</string>
+    <string name="update_downloading">Downloading…</string>
+    <string name="update_error">Could not download the update.</string>
     <string name="label_ids">Titles by TMDB ID</string>
     <string name="ids_placeholder">550, 1399 or a themoviedb.org link</string>
     <string name="ids_hint">One per line. Links from the TMDB site work too.</string>

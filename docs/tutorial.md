@@ -117,8 +117,10 @@ rows to keep themselves fresh.
 
 ## 10. Updating the app
 
-Install the new APK over the old one (same signature). Your rows and key stay. If you uninstall, the
-channels and settings are removed.
+When there is a new release, the app shows a popup with the version number and a **Download and
+install** button: it downloads the APK, hands it to Android and the system asks you to confirm.
+Rows and key stay. You can also install a new APK by hand over the old one (same signature). If you
+uninstall, the channels and settings are removed.
 
 ## Troubleshooting
 

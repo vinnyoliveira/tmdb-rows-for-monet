@@ -104,6 +104,19 @@ object Prefs {
         sp(context).edit().putString("ep_$id", value).apply()
     }
 
+    fun lastUpdateCheck(context: Context): Long = sp(context).getLong("update_check", 0L)
+
+    fun setLastUpdateCheck(context: Context, value: Long) {
+        sp(context).edit().putLong("update_check", value).apply()
+    }
+
+    /** Versão que a pessoa escolheu não instalar agora. */
+    fun ignoredVersion(context: Context): String = sp(context).getString("update_ignored", "") ?: ""
+
+    fun setIgnoredVersion(context: Context, value: String?) {
+        sp(context).edit().putString("update_ignored", value?.trim().orEmpty()).apply()
+    }
+
     /** Cartões: ligar/desligar o que é desenhado por cima da arte. */
     fun cardTitle(context: Context): Boolean = sp(context).getBoolean("card_title", true)
 
