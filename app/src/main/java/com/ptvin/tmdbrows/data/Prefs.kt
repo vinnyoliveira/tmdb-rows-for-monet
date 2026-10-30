@@ -96,6 +96,39 @@ object Prefs {
         sp(context).edit().putString(KEY_IMDB + cacheKey, value).apply()
     }
 
+    /** Último episódio de uma série: "data|quando foi buscado". */
+    fun episodeCache(context: Context, id: Int): String? =
+        sp(context).getString("ep_$id", null)
+
+    fun setEpisodeCache(context: Context, id: Int, value: String) {
+        sp(context).edit().putString("ep_$id", value).apply()
+    }
+
+    /** Cartões: ligar/desligar o que é desenhado por cima da arte. */
+    fun cardTitle(context: Context): Boolean = sp(context).getBoolean("card_title", true)
+
+    fun setCardTitle(context: Context, enabled: Boolean) {
+        sp(context).edit().putBoolean("card_title", enabled).apply()
+    }
+
+    fun cardTags(context: Context): Boolean = sp(context).getBoolean("card_tags", true)
+
+    fun setCardTags(context: Context, enabled: Boolean) {
+        sp(context).edit().putBoolean("card_tags", enabled).apply()
+    }
+
+    fun badgeNew(context: Context): Boolean = sp(context).getBoolean("badge_new", true)
+
+    fun setBadgeNew(context: Context, enabled: Boolean) {
+        sp(context).edit().putBoolean("badge_new", enabled).apply()
+    }
+
+    fun badgeEpisodes(context: Context): Boolean = sp(context).getBoolean("badge_episodes", true)
+
+    fun setBadgeEpisodes(context: Context, enabled: Boolean) {
+        sp(context).edit().putBoolean("badge_episodes", enabled).apply()
+    }
+
     /** Idioma no formato que o BetterPosters usa (`pt-BR`, `en-US`, …). */
     fun btttrLanguage(context: Context): String {
         val code = posterLanguage(context)

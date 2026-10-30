@@ -31,8 +31,10 @@ Full guide: [English](docs/tutorial.md) · [Português](docs/tutorial.pt-BR.md).
   **Airing today** and **New series** for the chosen service.
 - **Per row** — an optional cover card with the row name, ordering (including random), artwork
   (16:9 banner or 2:3 poster, optionally with BetterPosters covers) and player (Nuvio/Stremio).
-- **Cards** — composed on the device: backdrop, title logo and tags (rating, year, genre, NEW) in the
-  chosen language.
+- **Cards** — composed on the device: backdrop, scrim, title like a watermark and tags (rating, year,
+  genre) in the chosen language, plus a gold `NEW` ribbon for 15-day releases and a blue
+  `NEW EPISODE` ribbon for series that aired in the last 3 days. Each of these can be turned off in
+  Settings → Cards.
 
 ## Install
 

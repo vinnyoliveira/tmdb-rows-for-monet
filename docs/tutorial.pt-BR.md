@@ -75,7 +75,8 @@ de **pesquisa** para o resto da lista. Os logos vêm do TMDB.
 - **Seção** — numa plataforma de streaming também podes escolher **Hoje na TV** ou **Novas séries**
   (últimos 30 dias), as mesmas listas do site do TMDB, para o serviço escolhido.
 - **Ordem** — mais populares, melhor nota, mais recentes ou **aleatório**. O aleatório volta a
-  sortear em cada atualização, ideal para uma linha “surpreende-me”.
+  sortear em cada atualização, ideal para uma linha “surpreende-me”. Em séries há também **Novos
+  episódios**, ordenado pela data do episódio mais recente.
 - **Arte** — banner 16:9 (recomendado no Monet) ou póster 2:3.
 - **Abrir em** — esta linha pode abrir no Nuvio ou no Stremio mesmo que o resto da app use o outro.
 
@@ -86,9 +87,15 @@ cima de um fundo sorteado da própria linha. Liga ou desliga no editor em **Nome
 cartão**. Só se aplica a banners 16:9; uma linha chamada *Disney Filmes* começa com `DISNEY FILMES`
 deitado, como uma capa de prateleira no launcher.
 
-Os restantes cartões também são compostos no aparelho: backdrop, logo do título e uma fila de
-etiquetas em baixo — **nota**, **ano** e **gênero**, mais `NOVO` quando o título saiu nos últimos 60
-dias. As etiquetas vêm do TMDB, por isso seguem o idioma escolhido e não precisam de outro serviço.
+Os restantes cartões também são compostos no aparelho: backdrop, um scrim escuro, o título (grande,
+tipo marca d'água) e etiquetas pequenas em baixo — **nota**, **ano** e **gênero**. Dois selos podem
+aparecer no canto de cima:
+
+- `NOVO` (dourado) para filmes lançados nos últimos 15 dias;
+- `NOVO EPISÓDIO` (azul) para séries que transmitiram um episódio nos últimos 3 dias.
+
+Tudo vem do TMDB, por isso segue o idioma escolhido. Liga ou desliga o título, as etiquetas e cada
+selo em **Ajustes → Cartões**.
 
 ## 8. Idioma e capas
 

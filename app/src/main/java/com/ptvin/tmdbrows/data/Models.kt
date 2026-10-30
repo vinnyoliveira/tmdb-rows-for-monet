@@ -109,6 +109,7 @@ data class RowConfig(
 
     companion object {
         const val RANDOM = "random"
+        const val LAST_EPISODE = "last_episode.desc"
 
         val SORTS = listOf(
             "popularity.desc",
@@ -116,6 +117,9 @@ data class RowConfig(
             "primary_release_date.desc",
             RANDOM,
         )
+
+        fun sortsFor(type: MediaType): List<String> =
+            if (type == MediaType.TV) SORTS + LAST_EPISODE else SORTS
 
         fun sectionsFor(type: MediaType): List<Section> = when (type) {
             MediaType.MOVIE -> listOf(
@@ -186,6 +190,7 @@ fun sortLabel(context: Context, code: String): String = context.getString(
         "vote_average.desc" -> R.string.sort_rating
         "primary_release_date.desc" -> R.string.sort_newest
         RowConfig.RANDOM -> R.string.sort_random
+        RowConfig.LAST_EPISODE -> R.string.sort_new_episodes
         else -> R.string.sort_popularity
     },
 )

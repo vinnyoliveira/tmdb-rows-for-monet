@@ -76,7 +76,8 @@ Pick one of the main services (Netflix, Prime Video, Disney+, Apple TV, Max, Glo
 - **Section** — on a streaming service you can also pick **Airing today** or **New series** (last 30
   days), the same lists as TMDB's own site, for the service you chose.
 - **Ordering** — most popular, best rated, newest or **random**. Random reshuffles on every refresh,
-  which is great for a "surprise me" row.
+  which is great for a "surprise me" row. Series also get **New episodes**, ordered by the date of the
+  latest episode.
 - **Artwork** — 16:9 banner (recommended for Monet) or 2:3 poster.
 - **Open in** — this row can open in Nuvio or Stremio even if the rest of the app uses the other one.
 
@@ -87,9 +88,15 @@ random backdrop from the row. Turn it on or off in the editor under **Row name o
 It only applies to 16:9 banners; a row called *Disney Movies* starts with `DISNEY MOVIES` turned on
 its side, like a shelf cover in the launcher.
 
-The other cards are composed on the device as well: backdrop, the title logo and a line of tags at
-the bottom — **rating**, **year** and **genre**, plus `NEW` when the title came out in the last 60
-days. The tags come from TMDB, so they follow the language you picked and need no extra service.
+The other cards are composed on the device: backdrop, a dark scrim, the title (large, like a
+watermark) and small tags at the bottom — **rating**, **year** and **genre**. Two ribbons can appear in
+the top corner:
+
+- `NEW` (gold) for movies released in the last 15 days;
+- `NEW EPISODE` (blue) for series that aired an episode in the last 3 days.
+
+Everything comes from TMDB, so it follows the language you picked. Turn the title, the tags and each
+ribbon on or off in **Settings → Cards**.
 
 ## 8. Language and posters
 

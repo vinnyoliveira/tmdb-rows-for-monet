@@ -31,6 +31,8 @@ data class TmdbItem(
     @SerialName("media_type") val mediaType: String? = null,
     /** Só é preenchido quando os cartazes BetterPosters estão ligados. */
     @SerialName("imdb_id") val imdbId: String? = null,
+    /** Data (ISO) do último episódio já transmitido; só nas séries e quando o selo está ligado. */
+    val newEpisodeAt: String? = null,
 ) {
     val displayTitle: String get() = title ?: name ?: ""
     val date: String? get() = (releaseDate ?: firstAirDate)?.takeIf { it.isNotBlank() }
@@ -97,6 +99,15 @@ private data class TmdbImage(
 @Serializable
 private data class ExternalIds(@SerialName("imdb_id") val imdbId: String? = null)
 
+@Serializable
+private data class TvDetail(
+    @SerialName("last_air_date") val lastAirDate: String? = null,
+    @SerialName("last_episode_to_air") val lastEpisode: Episode? = null,
+)
+
+@Serializable
+private data class Episode(@SerialName("air_date") val airDate: String? = null)
+
 class TmdbException(message: String, val status: Int? = null) : Exception(message)
 
 object Tmdb {
@@ -115,6 +126,8 @@ object Tmdb {
     private val logoCache = HashMap<String, String>()
     private val providerCache = HashMap<String, List<TmdbProvider>>()
     private val imdbCache = ConcurrentHashMap<String, String>()
+    private val episodeCache = HashMap<Int, Pair<String?, Long>>()
+    private const val EPISODE_TTL_MS = 6L * 60 * 60 * 1000
 
     fun fetchItems(
         context: Context,
@@ -129,8 +142,10 @@ object Tmdb {
         val unique = LinkedHashMap<Int, TmdbItem>()
         val serverFiltered = row.mode == RowMode.PLATFORM || row.section == Section.DISCOVER
         val random = row.sortBy == RowConfig.RANDOM
-        // Aleatório: junta uma reserva maior e sorteia, para mudar em cada atualização.
-        val target = if (random) (limit * 3).coerceAtMost(MAX_PAGES * 20) else limit
+        val byEpisodes = row.mediaType == MediaType.TV && row.sortBy == RowConfig.LAST_EPISODE
+        // Reserva maior: para sortear ou para ordenar pelos episódios mais recentes.
+        val target = if (random || byEpisodes) (limit * 3).coerceAtMost(MAX_PAGES * 20) else limit
+        val withEpisodes = byEpisodes || (row.mediaType == MediaType.TV && Prefs.badgeEpisodes(context))
 
         for (page in 1..MAX_PAGES) {
             if (unique.size >= target) break
@@ -146,12 +161,22 @@ object Tmdb {
                 val ready = withPosterSource(context, key, row, resolved)
                 if (!hasArt(row, ready)) return@forEach
                 if (!serverFiltered && !matches(row, item)) return@forEach
-                unique[item.id] = ready
+                unique[item.id] = if (withEpisodes) {
+                    ready.copy(newEpisodeAt = latestEpisode(context, key, item.id))
+                } else {
+                    ready
+                }
             }
             if (pageItems.size < 20) break
         }
         val all = unique.values.toList()
-        return if (random) all.shuffled().take(limit) else all
+        return when {
+            random -> all.shuffled().take(limit)
+            byEpisodes -> all.filter { it.newEpisodeAt != null }
+                .sortedByDescending { it.newEpisodeAt }
+                .take(limit)
+            else -> all
+        }
     }
 
     /** Lista feita à mão: cada id custa 1 chamada (ou 2 quando o tipo é desconhecido). */
@@ -381,9 +406,30 @@ object Tmdb {
         return found
     }
 
+    /** Data do último episódio transmitido (cache de 6 h por série). */
+    private fun latestEpisode(context: Context, key: String, id: Int): String? {
+        val now = System.currentTimeMillis()
+        episodeCache[id]?.let { (date, at) -> if (now - at < EPISODE_TTL_MS) return date }
+        Prefs.episodeCache(context, id)?.let { stored ->
+            val at = stored.substringAfter('|', "0").toLongOrNull() ?: 0L
+            if (now - at < EPISODE_TTL_MS) {
+                val date = stored.substringBefore('|').takeIf { s -> s.isNotBlank() && s != "-" }
+                episodeCache[id] = date to at
+                return date
+            }
+        }
+        val url = "$BASE/tv/$id".toHttpUrl().newBuilder().apply { auth(key) }.build()
+        val date = runCatching {
+            val detail = json.decodeFromString(TvDetail.serializer(), execute(context, key, url))
+            detail.lastEpisode?.airDate ?: detail.lastAirDate
+        }.getOrNull()?.takeIf { it.length >= 10 }
+        episodeCache[id] = date to now
+        Prefs.setEpisodeCache(context, id, "${date.orEmpty()}|$now")
+        return date
+    }
+
     fun artUrl(
-        row: RowConfig,
-        item: TmdbItem,
+        row: RowConfig,        item: TmdbItem,
         preview: Boolean = false,
         language: String? = null,
         small: Boolean = false,
@@ -446,8 +492,8 @@ object Tmdb {
             if (row.mode != RowMode.FILTER || row.section == Section.DISCOVER ||
                 row.section == Section.NEW_SERIES || row.section == Section.AIRING_TODAY
             ) {
-                // Aleatório não tem suporte no TMDB: a ordem é sorteada no aparelho.
-                val random = sortBy(row) == RowConfig.RANDOM
+                // Aleatório e "novos episódios" não têm suporte no TMDB: a ordem é feita no aparelho.
+                val random = sortBy(row) == RowConfig.RANDOM || sortBy(row) == RowConfig.LAST_EPISODE
                 if (row.mediaType == MediaType.TV && row.section == Section.AIRING_TODAY) {
                     // O mesmo que "Hoje na TV" no site do TMDB.
                     addQueryParameter("air_date.gte", today)

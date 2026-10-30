@@ -14,6 +14,7 @@ import android.net.Uri
 import com.ptvin.tmdbrows.R
 import com.ptvin.tmdbrows.data.ArtStyle
 import com.ptvin.tmdbrows.data.Genres
+import com.ptvin.tmdbrows.data.MediaType
 import com.ptvin.tmdbrows.data.Prefs
 import com.ptvin.tmdbrows.data.RowConfig
 import com.ptvin.tmdbrows.data.Tmdb
@@ -35,6 +36,8 @@ object Banner {
     private const val W = 1280
     private const val H = 720
     private const val IMAGE_BASE = "https://image.tmdb.org/t/p"
+
+    private data class Ribbon(val label: String, val start: Int, val end: Int)
 
     /**
      * Gera o banner se ainda não existir.
@@ -63,23 +66,29 @@ object Banner {
                 if (!file.exists()) return null
                 return Uri.parse("content://$AUTHORITY/${file.name}")
             }
-            val banner = if (!category.isNullOrBlank()) {
-                // Capa: fundo aleatório da linha + nome na vertical.
-                val art = (coverPath ?: item.backdropPath)
-                    ?.let { download("$IMAGE_BASE/w1280$it") }?.let { decode(it) }
-                    ?: return null
-                renderCategory(art, category).also { art.recycle() }
-            } else {
-                val backdrop = item.backdropPath?.let { download("$IMAGE_BASE/w1280$it") }?.let { decode(it) }
-                    ?: return null
-                val logo = Tmdb.logoPath(context, key, type, item.id, Prefs.posterLanguage(context).substringBefore('-'))
+            val backdropUrl = if (!category.isNullOrBlank()) coverPath ?: item.backdropPath else item.backdropPath
+            val backdrop = backdropUrl?.let { download("$IMAGE_BASE/w1280$it") }?.let { decode(it) }
+                ?: return null
+            val withTitle = Prefs.cardTitle(context)
+            val logo = if (category.isNullOrBlank() && withTitle) {
+                Tmdb.logoPath(context, key, type, item.id, Prefs.posterLanguage(context).substringBefore('-'))
                     ?.let { download("$IMAGE_BASE/w500$it") }
                     ?.let { decode(it) }
-                val title = item.displayTitle.ifBlank { context.getString(R.string.untitled) }
-                render(backdrop, logo, title, item.year, badges(context, item)).also {
-                    backdrop.recycle()
-                    logo?.recycle()
-                }
+            } else {
+                null
+            }
+            val title = item.displayTitle.ifBlank { context.getString(R.string.untitled) }
+            val banner = render(
+                backdrop = backdrop,
+                logo = logo,
+                title = title,
+                badges = if (Prefs.cardTags(context)) badges(context, item) else emptyList(),
+                ribbon = if (category.isNullOrBlank()) ribbon(context, row, item) else null,
+                category = category,
+                withTitle = withTitle,
+            ).also {
+                backdrop.recycle()
+                logo?.recycle()
             }
             runCatching { FileOutputStream(file).use { banner.compress(Bitmap.CompressFormat.JPEG, 88, it) } }
             banner.recycle()
@@ -117,7 +126,8 @@ object Banner {
     ): String {
         val suffix = category?.takeIf { it.isNotBlank() }?.let { "-c${it.hashCode()}" }.orEmpty()
         val art = coverPath?.let { "-a${it.hashCode()}" }.orEmpty()
-        return "${row.id}-${item.id}$suffix$art$posterTag.jpg"
+        // Muda com o desenho do cartão: garante que os antigos são refeitos uma vez.
+        return "${row.id}-${item.id}$suffix$art$posterTag-d2.jpg"
     }
 
     /** Marca do cartaz: muda com o id do IMDb e com o idioma, para não servir o antigo. */
@@ -136,34 +146,55 @@ object Banner {
         }
     }
 
-    /** Etiquetas por cima da arte: novidade, nota, ano e género (não há badges de qualidade no TMDB). */
-    private fun badges(context: Context, item: TmdbItem): List<Pair<String, Boolean>> {
-        val out = ArrayList<Pair<String, Boolean>>(4)
-        val date = item.date
-        val recent = date != null && runCatching {
-            LocalDate.parse(date).isAfter(LocalDate.now().minusDays(60))
-        }.getOrDefault(false)
-        if (recent) out.add(context.getString(R.string.badge_new) to true)
+    /** Etiquetas neutras em baixo: nota, ano e género (os selos são à parte, em cima). */
+    private fun badges(context: Context, item: TmdbItem): List<String> {
+        val out = ArrayList<String>(3)
         if (item.voteAverage > 0.0) {
             val rating: String = String.format(Locale.getDefault(), "%.1f", item.voteAverage)
-            out.add("★ $rating" to false)
+            out.add("★ $rating")
         }
-        item.year?.let { out.add(it.toString() to false) }
+        item.year?.let { out.add(it.toString()) }
         item.genreIds.firstOrNull()?.let { id ->
             val name = Genres.name(context, id).orEmpty()
-            if (name.isNotBlank()) {
-                out.add((if (name.length > 20) name.take(19) + "…" else name) to false)
-            }
+            if (name.isNotBlank()) out.add(if (name.length > 20) name.take(19) + "…" else name)
         }
         return out
+    }
+
+    /** Selo em cima: novidade no cinema (15 dias) ou episódio novo (3 dias). */
+    private fun ribbon(context: Context, row: RowConfig, item: TmdbItem): Ribbon? {
+        val type = item.type ?: row.mediaType
+        val today = LocalDate.now()
+        val date = { raw: String? ->
+            raw?.let { runCatching { LocalDate.parse(it) }.getOrNull() }
+        }
+        if (type == MediaType.TV && Prefs.badgeEpisodes(context)) {
+            val at = date(item.newEpisodeAt)
+            if (at != null && !at.isBefore(today.minusDays(3)) && !at.isAfter(today)) {
+                return Ribbon(
+                    context.getString(R.string.ribbon_new_episode),
+                    0xFFC9D6FF.toInt(),
+                    0xFF8FE3FF.toInt(),
+                )
+            }
+        }
+        if (type == MediaType.MOVIE && Prefs.badgeNew(context)) {
+            val at = date(item.date)
+            if (at != null && !at.isBefore(today.minusDays(15)) && !at.isAfter(today)) {
+                return Ribbon(context.getString(R.string.ribbon_new), 0xFFFFD783.toInt(), 0xFFFFA94D.toInt())
+            }
+        }
+        return null
     }
 
     private fun render(
         backdrop: Bitmap,
         logo: Bitmap?,
         title: String,
-        year: Int?,
-        badges: List<Pair<String, Boolean>>,
+        badges: List<String>,
+        ribbon: Ribbon?,
+        category: String?,
+        withTitle: Boolean,
     ): Bitmap {
         val out = Bitmap.createBitmap(W, H, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(out)
@@ -180,65 +211,93 @@ object Banner {
             paint,
         )
 
-        // degradê à esquerda para o logo ter contraste
+        // Scrim: garante contraste para o texto sem tapar a arte.
         paint.shader = LinearGradient(
-            0f, 0f, W * 0.72f, 0f,
-            Color.argb(235, 8, 8, 12), Color.TRANSPARENT,
+            0f, 0f, W * 0.64f, 0f,
+            Color.argb(220, 6, 8, 14), Color.TRANSPARENT,
             Shader.TileMode.CLAMP,
         )
-        canvas.drawRect(0f, 0f, W * 0.72f, H.toFloat(), paint)
+        canvas.drawRect(0f, 0f, W * 0.64f, H.toFloat(), paint)
         paint.shader = LinearGradient(
-            0f, H * 0.55f, 0f, H.toFloat(),
-            Color.TRANSPARENT, Color.argb(150, 0, 0, 0),
+            0f, H * 0.42f, 0f, H.toFloat(),
+            Color.TRANSPARENT, Color.argb(230, 6, 8, 14),
             Shader.TileMode.CLAMP,
         )
-        canvas.drawRect(0f, H * 0.55f, W.toFloat(), H.toFloat(), paint)
+        canvas.drawRect(0f, H * 0.42f, W.toFloat(), H.toFloat(), paint)
         paint.shader = null
 
         val left = 78f
 
-        if (logo != null) {
-            val maxW = W * 0.44f
-            val s = min(maxW / logo.width, 210f / logo.height)
-            val lw = logo.width * s
-            val lh = logo.height * s
-            canvas.drawBitmap(logo, null, RectF(left, (H - lh) / 2f, left + lw, (H + lh) / 2f), paint)
-        } else {
-            val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = Color.WHITE
-                textSize = 62f
+        if (!category.isNullOrBlank()) {
+            // Capa: nome da linha na vertical, como marca d'água.
+            val name = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.argb(240, 234, 239, 255)
+                textSize = 64f
+                typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+                textAlign = Paint.Align.CENTER
+            }
+            val label = category.uppercase()
+            val maxLength = H - 150f
+            while (name.measureText(label) > maxLength && name.textSize > 26f) name.textSize *= 0.94f
+            canvas.save()
+            canvas.rotate(-90f, 150f, H / 2f)
+            canvas.drawText(label, 150f, H / 2f + name.textSize / 3f, name)
+            canvas.restore()
+        }
+
+        val textLeft = if (category.isNullOrBlank()) left else 236f
+
+        if (withTitle && !category.isNullOrBlank()) {
+            // Capa: também mostra o filme do primeiro cartão.
+            val movie = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.argb(236, 246, 248, 255)
+                textSize = 54f
                 typeface = Typeface.create("sans-serif", Typeface.BOLD)
             }
-            val maxW = W * 0.44f
-            val width = text.measureText(title)
-            if (width > maxW) text.textSize *= maxW / width
-            val baseline = H / 2f + text.textSize / 3f
-            canvas.drawText(title, left, baseline, text)
-            if (year != null) {
-                val small = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                    color = Color.argb(200, 220, 220, 230)
-                    textSize = 26f
-                }
-                canvas.drawText(year.toString(), left + 4f, baseline + 52f, small)
+            val lines = wrap(title, movie, W * 0.6f - textLeft, 2)
+            var y = H - 158f - (lines.size - 1) * movie.textSize * 1.12f
+            lines.forEach { line ->
+                canvas.drawText(line, textLeft, y, movie)
+                y += movie.textSize * 1.12f
+            }
+        } else if (withTitle && logo != null) {
+            val maxW = W * 0.5f
+            val s = min(maxW / logo.width, 200f / logo.height)
+            val lw = logo.width * s
+            val lh = logo.height * s
+            canvas.drawBitmap(logo, null, RectF(left, H * 0.46f - lh / 2f, left + lw, H * 0.46f + lh / 2f), paint)
+        } else if (withTitle) {
+            // Sem logo: título grande, com ar de marca d'água.
+            val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.argb(226, 240, 243, 250)
+                textSize = 86f
+                typeface = Typeface.create("sans-serif", Typeface.BOLD)
+            }
+            val lines = wrap(title, text, W * 0.6f - left, 2)
+            var y = H - 158f - (lines.size - 1) * text.textSize * 1.1f
+            lines.forEach { line ->
+                canvas.drawText(line, left, y, text)
+                y += text.textSize * 1.1f
             }
         }
-        drawBadges(canvas, badges, left)
+
+        drawBadges(canvas, badges, textLeft)
+        if (ribbon != null) drawRibbon(canvas, ribbon, left)
         return out
     }
 
-    private fun drawBadges(canvas: Canvas, badges: List<Pair<String, Boolean>>, left: Float) {
+    private fun drawBadges(canvas: Canvas, badges: List<String>, left: Float) {
         if (badges.isEmpty()) return
         val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             textSize = 26f
             typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+            color = Color.argb(238, 232, 236, 255)
         }
-        val box = Paint(Paint.ANTI_ALIAS_FLAG)
+        val box = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.argb(170, 10, 13, 22) }
         val top = H - 98f
         val bottom = H - 46f
         var x = left
-        badges.forEach { (label, accent) ->
-            box.color = if (accent) Color.parseColor("#E6BCC8FF") else Color.argb(200, 12, 16, 26)
-            text.color = if (accent) Color.parseColor("#0E1C4F") else Color.parseColor("#E8ECFF")
+        badges.forEach { label ->
             val width = text.measureText(label) + 40f
             canvas.drawRoundRect(RectF(x, top, x + width, bottom), 26f, 26f, box)
             canvas.drawText(label, x + 20f, bottom - 15f, text)
@@ -246,44 +305,50 @@ object Banner {
         }
     }
 
-    /** Capa da linha: fundo aleatório + nome na vertical. */
-    private fun renderCategory(backdrop: Bitmap, category: String): Bitmap {
-        val out = Bitmap.createBitmap(W, H, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(out)
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
-
-        val scale = max(W / backdrop.width.toFloat(), H / backdrop.height.toFloat())
-        val dw = backdrop.width * scale
-        val dh = backdrop.height * scale
-        canvas.drawBitmap(
-            backdrop,
-            null,
-            RectF((W - dw) / 2f, (H - dh) / 2f, (W + dw) / 2f, (H + dh) / 2f),
-            paint,
-        )
-        paint.color = Color.argb(70, 0, 0, 0)
-        canvas.drawRect(0f, 0f, W.toFloat(), H.toFloat(), paint)
-
-        // Painel vertical com o nome da linha.
-        paint.color = Color.argb(238, 8, 8, 12)
-        canvas.drawRect(0f, 0f, 300f, H.toFloat(), paint)
-        paint.color = Color.parseColor("#BCC8FF")
-        canvas.drawRect(296f, 0f, 300f, H.toFloat(), paint)
-
-        val title = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.WHITE
-            textSize = 58f
+    /** Selo de destaque no canto: pílula com gradiente, brilho e um ponto. */
+    private fun drawRibbon(canvas: Canvas, ribbon: Ribbon, left: Float) {
+        val top = 50f
+        val bottom = 108f
+        val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            textSize = 28f
             typeface = Typeface.create("sans-serif", Typeface.BOLD)
-            textAlign = Paint.Align.CENTER
+            color = Color.argb(245, 20, 16, 8)
         }
-        val text = category.uppercase()
-        val maxLength = H - 120f
-        while (title.measureText(text) > maxLength && title.textSize > 24f) title.textSize *= 0.94f
-        canvas.save()
-        canvas.rotate(-90f, 150f, H / 2f)
-        canvas.drawText(text, 150f, H / 2f + title.textSize / 3f, title)
-        canvas.restore()
-        return out
+        val width = text.measureText(ribbon.label) + 68f
+        val rect = RectF(left, top, left + width, bottom)
+        val glow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.argb(70, Color.red(ribbon.start), Color.green(ribbon.start), Color.blue(ribbon.start))
+        }
+        canvas.drawRoundRect(RectF(left - 6f, top - 6f, left + width + 6f, bottom + 6f), 34f, 34f, glow)
+        val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            shader = LinearGradient(left, top, left + width, bottom, ribbon.start, ribbon.end, Shader.TileMode.CLAMP)
+        }
+        canvas.drawRoundRect(rect, 29f, 29f, fill)
+        fill.shader = null
+        canvas.drawCircle(left + 28f, (top + bottom) / 2f, 7f, text)
+        canvas.drawText(ribbon.label, left + 46f, bottom - 17f, text)
+    }
+
+    /** Quebra o título em até [maxLines] linhas, reduzindo a letra se preciso. */
+    private fun wrap(text: String, paint: Paint, maxWidth: Float, maxLines: Int): List<String> {
+        var size = paint.textSize
+        while (true) {
+            val lines = ArrayList<String>()
+            val line = StringBuilder()
+            text.split(' ').forEach { word ->
+                val candidate = if (line.isEmpty()) word else "$line $word"
+                if (paint.measureText(candidate) <= maxWidth) {
+                    line.clear().append(candidate)
+                } else {
+                    if (line.isNotEmpty()) lines += line.toString()
+                    line.clear().append(word)
+                }
+            }
+            if (line.isNotEmpty()) lines += line.toString()
+            if (lines.size <= maxLines || size <= 40f) return lines.take(maxLines)
+            size *= 0.9f
+            paint.textSize = size
+        }
     }
     private fun download(url: String): ByteArray? = runCatching {
         Tmdb.client.newCall(Request.Builder().url(url).build()).execute().use { response ->

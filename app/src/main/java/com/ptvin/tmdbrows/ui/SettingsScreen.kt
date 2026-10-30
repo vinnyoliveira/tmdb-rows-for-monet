@@ -49,6 +49,10 @@ fun SettingsScreen(onBack: () -> Unit, onHelp: () -> Unit) {
     var language by remember { mutableStateOf(Prefs.languageChoice(context)) }
     var appLanguage by remember { mutableStateOf(Prefs.appLanguage(context)) }
     var betterPosters by remember { mutableStateOf(Prefs.betterPosters(context)) }
+    var cardTitle by remember { mutableStateOf(Prefs.cardTitle(context)) }
+    var cardTags by remember { mutableStateOf(Prefs.cardTags(context)) }
+    var badgeNew by remember { mutableStateOf(Prefs.badgeNew(context)) }
+    var badgeEpisodes by remember { mutableStateOf(Prefs.badgeEpisodes(context)) }
     var languages by remember { mutableStateOf<List<TmdbLanguage>>(emptyList()) }
     var showAllLanguages by remember { mutableStateOf(false) }
     var status by remember { mutableStateOf<String?>(null) }
@@ -189,6 +193,51 @@ fun SettingsScreen(onBack: () -> Unit, onHelp: () -> Unit) {
                     Prefs.setBetterPosters(context, it)
                 },
                 description = stringResource(R.string.better_posters_note),
+            )
+        }
+
+        Panel(stringResource(R.string.panel_cards)) {
+            SwitchRow(
+                label = stringResource(R.string.card_title),
+                checked = cardTitle,
+                onCheckedChange = {
+                    cardTitle = it
+                    Prefs.setCardTitle(context, it)
+                },
+                description = stringResource(R.string.card_title_hint),
+            )
+            SwitchRow(
+                label = stringResource(R.string.card_tags),
+                checked = cardTags,
+                onCheckedChange = {
+                    cardTags = it
+                    Prefs.setCardTags(context, it)
+                },
+                description = stringResource(R.string.card_tags_hint),
+            )
+            SwitchRow(
+                label = stringResource(R.string.card_badge_new),
+                checked = badgeNew,
+                onCheckedChange = {
+                    badgeNew = it
+                    Prefs.setBadgeNew(context, it)
+                },
+                description = stringResource(R.string.card_badge_new_hint),
+            )
+            SwitchRow(
+                label = stringResource(R.string.card_badge_episodes),
+                checked = badgeEpisodes,
+                onCheckedChange = {
+                    badgeEpisodes = it
+                    Prefs.setBadgeEpisodes(context, it)
+                },
+                description = stringResource(R.string.card_badge_episodes_hint),
+            )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.cards_apply_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 

@@ -362,7 +362,8 @@ fun EditorScreen(initial: RowConfig?, onDone: () -> Unit) {
                             if (draft.mode == RowMode.PLATFORM || draft.section == Section.DISCOVER) {
                                 SectionLabel(stringResource(R.string.label_sort))
                                 ChipRow(
-                                    options = RowConfig.SORTS.map { it to sortLabel(context, it) },
+                                    options = RowConfig.sortsFor(draft.mediaType)
+                                        .map { it to sortLabel(context, it) },
                                     selected = draft.sortBy,
                                     onSelect = { draft = draft.copy(sortBy = it) },
                                 )

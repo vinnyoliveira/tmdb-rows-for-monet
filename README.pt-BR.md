@@ -32,8 +32,10 @@ Guia completo: [Português](docs/tutorial.pt-BR.md) · [English](docs/tutorial.m
   **Hoje na TV** e **Novas séries** para a plataforma escolhida.
 - **Por linha** — um cartão de capa opcional com o nome da linha, ordem (incluindo aleatório), arte
   (banner 16:9 ou póster 2:3, com capas BetterPosters opcionais) e player (Nuvio/Stremio).
-- **Cartões** — compostos no aparelho: backdrop, logo do título e etiquetas (nota, ano, gênero, NOVO)
-  no idioma escolhido.
+- **Cartões** — compostos no aparelho: backdrop, scrim, título tipo marca d'água e etiquetas (nota,
+  ano, gênero) no idioma escolhido, mais um selo dourado `NOVO` para lançamentos de 15 dias e um selo
+  azul `NOVO EPISÓDIO` para séries com episódio nos últimos 3 dias. Cada um pode ser desligado em
+  Ajustes → Cartões.
 
 ## Instalar
 

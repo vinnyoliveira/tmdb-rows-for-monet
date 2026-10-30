@@ -159,6 +159,27 @@ class TmdbUrlTest {
     }
 
     @Test
+    fun novosEpisodiosNaoVaoParaOServidor() {
+        val row = RowConfig(
+            mode = RowMode.PLATFORM,
+            mediaType = MediaType.TV,
+            providers = listOf(307),
+            sortBy = RowConfig.LAST_EPISODE,
+        )
+
+        val url = Tmdb.buildUrl(row, 1, "abc", region = "BR")
+
+        assertNull(url.queryParameter("sort_by"))
+        assertEquals("307", url.queryParameter("with_watch_providers"))
+    }
+
+    @Test
+    fun ordenarPorNovosEpisodiosSoEmSeries() {
+        assertTrue(RowConfig.LAST_EPISODE in RowConfig.sortsFor(MediaType.TV))
+        assertTrue(RowConfig.LAST_EPISODE !in RowConfig.sortsFor(MediaType.MOVIE))
+    }
+
+    @Test
     fun leIdsELinksDoSite() {
         val dois = RowIdInput.parse("550, 1399")
         assertEquals(listOf(550, 1399), dois.map { it.id })
