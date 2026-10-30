@@ -14,7 +14,7 @@ Download the latest `tmdb-rows-for-monet-*.apk` from the **Releases** page and i
 (USB, `adb`, or a file manager). Allow installs from unknown sources when Android asks.
 
 ```bash
-adb install -r tmdb-rows-for-monet-1.0.apk
+adb install -r tmdb-rows-for-monet-1.2.apk
 ```
 
 ## 2. First launch: language and key
@@ -88,9 +88,9 @@ random backdrop from the row. Turn it on or off in the editor under **Row name o
 It only applies to 16:9 banners; a row called *Disney Movies* starts with `DISNEY MOVIES` turned on
 its side, like a shelf cover in the launcher.
 
-The other cards are composed on the device: backdrop, a dark scrim, the title (large, like a
-watermark) and small tags at the bottom — **rating**, **year** and **genre**. Two ribbons can appear in
-the top corner:
+The other cards are composed on the device: backdrop, a dark scrim, the title (like a watermark) and a
+dark band across the bottom with the tags — **rating**, **year** and **genre**. Every card in a row
+uses the same type sizes, so nothing jumps around. Two ribbons can appear in the top corner:
 
 - `NEW` (gold) for movies released in the last 15 days;
 - `NEW EPISODE` (blue) for series that aired an episode in the last 3 days.

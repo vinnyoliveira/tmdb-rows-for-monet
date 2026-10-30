@@ -42,7 +42,7 @@ Download `tmdb-rows-for-monet-*.apk` from [Releases](../../releases) and install
 (8.0+):
 
 ```bash
-adb install -r tmdb-rows-for-monet-1.0.apk
+adb install -r tmdb-rows-for-monet-1.2.apk
 ```
 
 ## Build

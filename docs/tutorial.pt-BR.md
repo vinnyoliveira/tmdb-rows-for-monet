@@ -14,7 +14,7 @@ Descarrega o `tmdb-rows-for-monet-*.apk` mais recente na página **Releases** e 
 (USB, `adb` ou gestor de ficheiros). Aceita “instalar de fontes desconhecidas” quando o Android pedir.
 
 ```bash
-adb install -r tmdb-rows-for-monet-1.0.apk
+adb install -r tmdb-rows-for-monet-1.2.apk
 ```
 
 ## 2. Primeiro arranque: idioma e chave
@@ -87,8 +87,9 @@ cima de um fundo sorteado da própria linha. Liga ou desliga no editor em **Nome
 cartão**. Só se aplica a banners 16:9; uma linha chamada *Disney Filmes* começa com `DISNEY FILMES`
 deitado, como uma capa de prateleira no launcher.
 
-Os restantes cartões também são compostos no aparelho: backdrop, um scrim escuro, o título (grande,
-tipo marca d'água) e etiquetas pequenas em baixo — **nota**, **ano** e **gênero**. Dois selos podem
+Os restantes cartões também são compostos no aparelho: backdrop, um scrim escuro, o título (tipo
+marca d'água) e uma faixa escura em baixo com as etiquetas — **nota**, **ano** e **gênero**. Todos os
+cartões da linha usam os mesmos corpos de letra, por isso nada salta de tamanho. Dois selos podem
 aparecer no canto de cima:
 
 - `NOVO` (dourado) para filmes lançados nos últimos 15 dias;

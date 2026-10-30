@@ -39,14 +39,12 @@ object ChannelPublisher {
         runCatching { TvContractCompat.requestChannelBrowsable(context, channelId) }
         Channels.clearPrograms(context, channelId)
         val banner = row.art == ArtStyle.BACKDROP
-        val coverItem = if (banner && row.showCover) items.random() else null
-        val coverPath = coverItem?.backdropPath
+        val cover = banner && row.showCover
         val bannerNames = items.take(MAX_PROGRAMS).mapIndexed { index, item ->
             Banner.fileName(
                 row,
                 item,
-                if (index == 0 && coverItem != null) channelTitle else null,
-                if (index == 0) coverPath else null,
+                if (index == 0 && cover) channelTitle else null,
                 Banner.posterTag(context, item),
             )
         }.toSet()
@@ -54,7 +52,7 @@ object ChannelPublisher {
 
         val key = Prefs.tmdbKey(context)
         val banners = if (banner || Prefs.betterPosters(context)) {
-            generateBanners(context, key, row, items, channelTitle, coverPath)
+            generateBanners(context, key, row, items, channelTitle)
         } else {
             emptyMap()
         }
@@ -144,15 +142,13 @@ object ChannelPublisher {
         row: RowConfig,
         items: List<TmdbItem>,
         category: String,
-        coverPath: String?,
     ): Map<Int, Uri> {
         val pool = Executors.newFixedThreadPool(3)
         return try {
             val tasks = items.take(MAX_PROGRAMS).mapIndexed { index, item ->
                 // A capa da linha só existe nos banners 16:9.
                 val label = if (index == 0 && row.art == ArtStyle.BACKDROP) category else null
-                val art = if (index == 0) coverPath else null
-                Callable { item.id to Banner.ensure(context, key, row, item, label, art) }
+                Callable { item.id to Banner.ensure(context, key, row, item, label) }
             }
             pool.invokeAll(tasks)
                 .mapNotNull { runCatching { it.get() }.getOrNull() }
