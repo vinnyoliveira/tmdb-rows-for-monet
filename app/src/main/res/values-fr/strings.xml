@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TMDB Rows for Monet</string>
+
+    <!-- Bienvenue -->
+    <string name="setup_title">Bienvenue dans TMDB Rows for Monet</string>
+    <string name="setup_intro">Des rangées de films et de séries TMDB, sur le lanceur de votre TV.</string>
+    <string name="setup_key_title">D’abord : votre clé TMDB gratuite</string>
+    <string name="setup_step1">1. Sur un téléphone ou un ordinateur, ouvrez themoviedb.org et créez un compte gratuit.</string>
+    <string name="setup_step2">2. Ouvrez Paramètres → API et copiez la « API Key (v3 auth) ».</string>
+    <string name="setup_step3">3. Collez-la ci-dessous et touchez Valider.</string>
+    <string name="setup_key_placeholder">Clé API (v3) ou read token (v4)</string>
+    <string name="setup_validate">Valider et démarrer</string>
+    <string name="setup_validating">Vérification…</string>
+    <string name="setup_invalid">TMDB a refusé cette clé. Vérifiez que vous l’avez copiée en entier.</string>
+    <string name="setup_privacy">La clé reste uniquement sur cet appareil.</string>
+    <string name="setup_next">Ensuite, créez une rangée ici et ajoutez-la dans Monet (Personnaliser → rangée de médias → TMDB Rows for Monet).</string>
+
+    <!-- Accueil -->
+    <plurals name="home_rows">
+        <item quantity="one">%1$d rangée · %2$d publiée</item>
+        <item quantity="other">%1$d rangées · %2$d publiées</item>
+    </plurals>
+    <string name="home_new_row">Nouvelle rangée</string>
+    <string name="home_refresh">Actualiser</string>
+    <string name="home_refreshing">Actualisation…</string>
+    <string name="home_settings">Réglages</string>
+    <string name="home_help">?</string>
+    <string name="home_empty">Aucune rangée. Créez la première.</string>
+    <string name="status_error">Erreur · %1$s</string>
+
+    <!-- Rangées -->
+    <string name="row_mode_filter">Filtres TMDB</string>
+    <string name="row_mode_filter_short">Filtres</string>
+    <string name="row_mode_ids_short">Ma liste</string>
+    <string name="row_mode_platform_short">Service</string>
+    <string name="row_mode_ids">Ma liste</string>
+    <string name="row_mode_platform">Plateforme de streaming</string>
+    <string name="row_custom_title">Ma liste</string>
+    <string name="row_platform_fallback">Streaming</string>
+
+    <string name="media_movie">Films</string>
+    <string name="media_tv">Séries</string>
+
+    <string name="section_trending_day">Tendances du jour</string>
+    <string name="section_trending_week">Tendances de la semaine</string>
+    <string name="section_popular">Populaires</string>
+    <string name="section_top_rated">Mieux notés</string>
+    <string name="section_upcoming">Prochainement</string>
+    <string name="section_now_playing">Au cinéma</string>
+    <string name="section_on_the_air">À l’antenne</string>
+    <string name="section_airing_today">Aujourd’hui à la TV</string>
+    <string name="section_new_series">Nouvelles séries</string>
+    <string name="section_discover">Découvrir</string>
+
+    <string name="art_poster">Affiche 2:3</string>
+    <string name="art_backdrop">Bannière 16:9</string>
+
+    <string name="sort_popularity">Les plus populaires</string>
+    <string name="sort_rating">Meilleure note</string>
+    <string name="sort_newest">Plus récents</string>
+    <string name="sort_random">Aléatoire (change à chaque actualisation)</string>
+
+
+
+    <string name="summary_rating">note %1$s+</string>
+    <string name="summary_year">%1$d+</string>
+    <plurals name="summary_items">
+        <item quantity="one">%1$d titre</item>
+        <item quantity="other">%1$d titres</item>
+    </plurals>
+    <string name="channel_description">Rangée TMDB · %1$s</string>
+
+    <!-- Éditeur -->
+    <string name="editor_title_new">Nouvelle rangée</string>
+    <string name="editor_title_edit">Modifier la rangée</string>
+    <string name="editor_subtitle">Aperçu à droite. Enregistrer publie dans Monet.</string>
+    <string name="label_title">Titre</string>
+    <string name="label_mode">Source</string>
+    <string name="label_type">Type</string>
+    <string name="label_section">Section</string>
+    <string name="label_sort">Trier par</string>
+    <string name="label_min_rating">Note minimale</string>
+    <string name="value_any">indifférent</string>
+    <string name="label_year">Année minimale</string>
+    <string name="label_items">Titres dans la rangée</string>
+    <string name="label_art">Visuel</string>
+    <string name="cover_title">Nom de la rangée sur la première carte</string>
+    <string name="cover_help">Un tiers de la vignette avec le nom de la rangée, à la verticale, sur un fond aléatoire.</string>
+    <string name="label_genres">Genres (au choix)</string>
+    <string name="label_provider">Plateforme</string>
+    <string name="provider_search">Chercher un service</string>
+    <string name="badge_new">NOUVEAU</string>
+    <string name="label_ids">Titres par ID TMDB</string>
+    <string name="ids_placeholder">550, 1399 ou un lien themoviedb.org</string>
+    <string name="ids_hint">Un par ligne. Les liens du site sont acceptés.</string>
+    <string name="action_add">Ajouter</string>
+    <string name="action_adding">Ajout…</string>
+    <string name="label_list">Votre liste</string>
+    <string name="list_empty">Aucun titre. Ajoutez un ID ou cherchez par nom.</string>
+    <string name="action_remove">Retirer</string>
+    <string name="label_search">Chercher dans TMDB</string>
+    <string name="search_placeholder">Titre, ex. : Ainda Estou Aqui</string>
+    <string name="action_search">Chercher</string>
+    <string name="search_empty">Aucun résultat.</string>
+    <string name="search_hint">Choisissez un titre puis touchez Ajouter.</string>
+    <string name="action_save">Enregistrer et publier</string>
+    <string name="action_publishing">Publication…</string>
+    <string name="action_delete">Supprimer</string>
+    <string name="action_confirm_delete">Confirmer la suppression</string>
+    <string name="hint_delete_again">Touchez encore pour supprimer cette rangée.</string>
+    <string name="preview_title">Aperçu</string>
+    <string name="preview_loading">Chargement depuis TMDB…</string>
+    <string name="preview_count">%1$d titres · %2$s</string>
+    <string name="text_field_hint">Appuyez sur OK pour écrire</string>
+    <string name="text_field_editing">◀ ▶ déplace le curseur · ▼ quitte le champ</string>
+    <string name="untitled">Sans titre</string>
+    <string name="editor_advanced">Filtres avancés</string>
+    <string name="label_opener">Ouvrir dans</string>
+    <string name="opener_default">Par défaut (%1$s)</string>
+
+    <!-- Réglages -->
+    <string name="settings_title">Réglages</string>
+    <string name="settings_version">version %1$s</string>
+    <string name="panel_key">Clé TMDB</string>
+    <string name="key_help">Collez votre clé. Créez-en une gratuitement sur themoviedb.org → Paramètres → API.</string>
+    <string name="action_save_key">Enregistrer la clé</string>
+    <string name="action_validating">Vérification…</string>
+    <string name="key_saved">Clé enregistrée et validée.</string>
+    <string name="key_saved_invalid">Clé enregistrée, mais TMDB l’a refusée. Vérifiez-la.</string>
+    <string name="app_language_title">Langue de l’app</string>
+    <string name="app_language_system">Système</string>
+    <string name="app_language_hint">Change les textes de cette app. Les titres et affiches ont leur propre réglage.</string>
+    <string name="panel_language">Affiches et titres</string>
+    <string name="language_help">Langue des titres et des visuels. Automatique suit cet appareil.</string>
+    <string name="language_auto">Automatique (%1$s)</string>
+    <string name="language_show_all">Toutes les langues</string>
+    <string name="language_show_less">Moins de langues</string>
+    <string name="language_saved">Langue enregistrée. Actualisez pour appliquer.</string>
+    <string name="panel_opener">Toucher une affiche</string>
+    <string name="panel_art">Visuels</string>
+    <string name="better_posters_title">Affiches BetterPosters</string>
+    <string name="better_posters_help">Optionnel. Affiches 2:3 avec le titre imprimé, depuis btttr.cc, dans la langue de visuels choisie ci-dessus.</string>
+    <string name="better_posters_note">Uniquement pour Affiche 2:3. Service tiers : nécessite Internet et peut changer ou disparaître ; sinon, affiche TMDB.</string>
+    <string name="panel_refresh">Synchronisation</string>
+    <string name="sync_title">Synchronisation automatique</string>
+    <string name="sync_help">Désactivée : rien ne tourne en arrière-plan. Les rangées ne changent qu’avec Actualiser.</string>
+    <string name="refresh_every">Recréer les canaux toutes les</string>
+    <string name="action_refresh_now">Actualiser maintenant</string>
+    <string name="action_back">Retour</string>
+    <string name="panel_about">À propos</string>
+    <string name="about_text">Utilise l’API TMDB. Ni approuvé ni certifié par TMDB.</string>
+
+    <!-- Aide -->
+    <string name="help_title">Comment ça marche</string>
+    <string name="help_step1">1. Créez une rangée : filtres TMDB, une plateforme ou votre liste.</string>
+    <string name="help_step2">2. Touchez Enregistrer et publier. La rangée devient un canal sur l’appareil.</string>
+    <string name="help_step3">3. Dans Monet : Personnaliser → rangée de médias → TMDB Rows for Monet → choisissez la rangée par son nom.</string>
+    <string name="help_step4">4. Touchez une affiche pour ouvrir le titre dans Nuvio ou Stremio.</string>
+    <string name="help_tip">Chaque rangée est un canal séparé. Si Monet affiche autre chose, vérifiez que vous avez choisi le nom de cette rangée.</string>
+    <string name="action_close">Fermer</string>
+
+    <!-- Exemples -->
+    <string name="seed_trending_movie">Tendances du jour</string>
+    <string name="seed_trending_tv">Séries en tendance</string>
+    <string name="seed_popular_movie">Films populaires</string>
+    <string name="seed_popular_tv">Séries populaires</string>
+    <string name="seed_top_rated">Mieux notés</string>
+    <string name="seed_horror">Horreur</string>
+
+    <!-- Erreurs -->
+    <string name="error_no_key">Pas de clé TMDB. Ajoutez-la dans les réglages.</string>
+    <string name="error_invalid_key">Clé TMDB invalide</string>
+    <string name="error_rate">Trop de requêtes TMDB, réessayez plus tard</string>
+    <string name="error_http">TMDB a répondu HTTP %1$d</string>
+    <string name="error_offline">Pas de connexion à TMDB</string>
+    <string name="error_bad_response">Réponse inattendue de TMDB</string>
+    <string name="error_no_results">Aucun résultat avec ces filtres</string>
+    <string name="error_no_items">Rien à publier</string>
+    <string name="error_ids_empty">Ajoutez au moins un titre à la liste</string>
+    <string name="error_ids_none">Aucun de ces IDs n’a été trouvé sur TMDB</string>
+    <string name="error_provider_empty">Choisissez au moins une plateforme</string>
+    <string name="error_publish_channel">Impossible de créer le canal</string>
+    <string name="error_publish_empty">Rien n’a été publié dans le canal</string>
+    <string name="from_tmdb">De TMDB.</string>
+    <string name="refresh_none">Aucune rangée publiée</string>
+    <string name="refresh_ok">%1$d rangées publiées</string>
+    <string name="refresh_mixed">%1$d publiées, %2$d en erreur</string>
+    <string name="refresh_no_key">Configurez la clé TMDB dans les réglages</string>
+
+    <!-- Genres -->
+    <string name="genre_28">Action</string>
+    <string name="genre_12">Aventure</string>
+    <string name="genre_16">Animation</string>
+    <string name="genre_35">Comédie</string>
+    <string name="genre_80">Crime</string>
+    <string name="genre_99">Documentaire</string>
+    <string name="genre_18">Drame</string>
+    <string name="genre_10751">Famille</string>
+    <string name="genre_14">Fantastique</string>
+    <string name="genre_36">Histoire</string>
+    <string name="genre_27">Horreur</string>
+    <string name="genre_10402">Musique</string>
+    <string name="genre_9648">Mystère</string>
+    <string name="genre_10749">Romance</string>
+    <string name="genre_878">Science-fiction</string>
+    <string name="genre_53">Thriller</string>
+    <string name="genre_10752">Guerre</string>
+    <string name="genre_37">Western</string>
+    <string name="genre_10759">Action et aventure</string>
+    <string name="genre_10762">Jeunesse</string>
+    <string name="genre_10763">Actualités</string>
+    <string name="genre_10764">Téléréalité</string>
+    <string name="genre_10765">Science-fiction et fantastique</string>
+    <string name="genre_10766">Feuilleton</string>
+    <string name="genre_10767">Talk-show</string>
+    <string name="genre_10768">Guerre et politique</string>
+</resources>

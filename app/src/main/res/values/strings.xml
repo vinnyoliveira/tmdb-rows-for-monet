@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TMDB Rows for Monet</string>
+
+    <!-- Welcome -->
+    <string name="setup_title">Welcome to TMDB Rows for Monet</string>
+    <string name="setup_intro">Rows of movies and series from TMDB, on your TV launcher.</string>
+    <string name="setup_key_title">First: your free TMDB key</string>
+    <string name="setup_step1">1. On a phone or computer, open themoviedb.org and create a free account.</string>
+    <string name="setup_step2">2. Go to Settings → API and copy the “API Key (v3 auth)”.</string>
+    <string name="setup_step3">3. Paste it below, tap Validate.</string>
+    <string name="setup_key_placeholder">TMDB API key (v3) or read token (v4)</string>
+    <string name="setup_validate">Validate and start</string>
+    <string name="setup_validating">Checking…</string>
+    <string name="setup_invalid">TMDB refused this key. Check that you copied all of it.</string>
+    <string name="setup_privacy">The key stays on this device.</string>
+    <string name="setup_next">Next: create a row here, then add it in Monet (Personalize → media row → TMDB Rows for Monet).</string>
+
+    <!-- Home -->
+    <plurals name="home_rows">
+        <item quantity="one">%1$d row · %2$d published</item>
+        <item quantity="other">%1$d rows · %2$d published</item>
+    </plurals>
+    <string name="home_new_row">New row</string>
+    <string name="home_refresh">Refresh</string>
+    <string name="home_refreshing">Refreshing…</string>
+    <string name="home_settings">Settings</string>
+    <string name="home_help">?</string>
+    <string name="home_empty">No rows yet. Create the first one.</string>
+    <string name="status_error">Error · %1$s</string>
+
+    <!-- Rows -->
+    <string name="row_mode_filter">TMDB filters</string>
+    <string name="row_mode_filter_short">Filters</string>
+    <string name="row_mode_ids_short">My list</string>
+    <string name="row_mode_platform_short">Service</string>
+    <string name="row_mode_ids">My list</string>
+    <string name="row_mode_platform">Streaming service</string>
+    <string name="row_custom_title">My list</string>
+    <string name="row_platform_fallback">Streaming</string>
+
+    <string name="media_movie">Movies</string>
+    <string name="media_tv">Series</string>
+
+    <string name="section_trending_day">Trending today</string>
+    <string name="section_trending_week">Trending this week</string>
+    <string name="section_popular">Popular</string>
+    <string name="section_top_rated">Top rated</string>
+    <string name="section_upcoming">Upcoming</string>
+    <string name="section_now_playing">In theaters</string>
+    <string name="section_on_the_air">On the air</string>
+    <string name="section_airing_today">Airing today</string>
+    <string name="section_new_series">New series</string>
+    <string name="section_discover">Discover</string>
+
+    <string name="art_poster">Poster 2:3</string>
+    <string name="art_backdrop">Banner 16:9</string>
+
+    <string name="sort_popularity">Most popular</string>
+    <string name="sort_rating">Best rated</string>
+    <string name="sort_newest">Newest</string>
+    <string name="sort_random">Random (changes on refresh)</string>
+
+
+
+    <string name="summary_rating">rating %1$s+</string>
+    <string name="summary_year">%1$d+</string>
+    <plurals name="summary_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <string name="channel_description">TMDB row · %1$s</string>
+
+    <!-- Editor -->
+    <string name="editor_title_new">New row</string>
+    <string name="editor_title_edit">Edit row</string>
+    <string name="editor_subtitle">Live preview on the right. Saving publishes to Monet.</string>
+    <string name="label_title">Title</string>
+    <string name="label_mode">Source</string>
+    <string name="label_type">Type</string>
+    <string name="label_section">Section</string>
+    <string name="label_sort">Sort by</string>
+    <string name="label_min_rating">Minimum rating</string>
+    <string name="value_any">any</string>
+    <string name="label_year">Minimum year</string>
+    <string name="label_items">Items in row</string>
+    <string name="label_art">Artwork</string>
+    <string name="cover_title">Row name on the first card</string>
+    <string name="cover_help">One third of the image with the row name, written vertically over a random backdrop.</string>
+    <string name="label_genres">Genres (any selected)</string>
+    <string name="label_provider">Service</string>
+    <string name="provider_search">Search services</string>
+    <string name="badge_new">NEW</string>
+    <string name="label_ids">Titles by TMDB ID</string>
+    <string name="ids_placeholder">550, 1399 or a themoviedb.org link</string>
+    <string name="ids_hint">One per line. Links from the TMDB site work too.</string>
+    <string name="action_add">Add</string>
+    <string name="action_adding">Adding…</string>
+    <string name="label_list">Your list</string>
+    <string name="list_empty">No titles yet. Add an ID or search by name.</string>
+    <string name="action_remove">Remove</string>
+    <string name="label_search">Search TMDB</string>
+    <string name="search_placeholder">Title, e.g. Ainda Estou Aqui</string>
+    <string name="action_search">Search</string>
+    <string name="search_empty">Nothing found.</string>
+    <string name="search_hint">Pick a title and tap Add.</string>
+    <string name="action_save">Save and publish</string>
+    <string name="action_publishing">Publishing…</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_confirm_delete">Confirm delete</string>
+    <string name="hint_delete_again">Press again to delete this row.</string>
+    <string name="preview_title">Preview</string>
+    <string name="preview_loading">Loading from TMDB…</string>
+    <string name="preview_count">%1$d titles · %2$s</string>
+    <string name="text_field_hint">Press OK to type</string>
+    <string name="text_field_editing">◀ ▶ moves the cursor · ▼ leaves the field</string>
+    <string name="untitled">Untitled</string>
+    <string name="editor_advanced">Advanced filters</string>
+    <string name="label_opener">Open in</string>
+    <string name="opener_default">Default (%1$s)</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_version">version %1$s</string>
+    <string name="panel_key">TMDB key</string>
+    <string name="key_help">Paste your key. Get one free at themoviedb.org → Settings → API.</string>
+    <string name="action_save_key">Save key</string>
+    <string name="action_validating">Checking…</string>
+    <string name="key_saved">Key saved and validated.</string>
+    <string name="key_saved_invalid">Key saved, but TMDB refused it. Check it.</string>
+    <string name="app_language_title">App language</string>
+    <string name="app_language_system">System</string>
+    <string name="app_language_hint">Changes the texts of this app. Titles and posters have their own setting.</string>
+    <string name="panel_language">Posters and titles</string>
+    <string name="language_help">Language of titles and artwork. Automatic follows this device.</string>
+    <string name="language_auto">Automatic (%1$s)</string>
+    <string name="language_show_all">All languages</string>
+    <string name="language_show_less">Fewer languages</string>
+    <string name="language_saved">Language saved. Refresh to apply.</string>
+    <string name="panel_opener">Tap on a poster</string>
+    <string name="panel_art">Artwork</string>
+    <string name="better_posters_title">BetterPosters covers</string>
+    <string name="better_posters_help">Optional. 2:3 posters with the title printed on the image, from btttr.cc, in the artwork language chosen above.</string>
+    <string name="better_posters_note">Only for Poster 2:3. Third-party service: needs internet and may change or go offline; without it the TMDB poster is used.</string>
+    <string name="panel_refresh">Sync</string>
+    <string name="sync_title">Automatic sync</string>
+    <string name="sync_help">Off: nothing runs in the background. Rows only change when you tap Refresh.</string>
+    <string name="refresh_every">Recreate channels every</string>
+    <string name="action_refresh_now">Refresh now</string>
+    <string name="action_back">Back</string>
+    <string name="panel_about">About</string>
+    <string name="about_text">Uses the TMDB API. Not endorsed or certified by TMDB.</string>
+
+    <!-- Help -->
+    <string name="help_title">How it works</string>
+    <string name="help_step1">1. Create a row: TMDB filters, a streaming service, or your own list.</string>
+    <string name="help_step2">2. Tap Save and publish. The row becomes a channel on the device.</string>
+    <string name="help_step3">3. In Monet: Personalize → media row → TMDB Rows for Monet → pick the row by name.</string>
+    <string name="help_step4">4. Tap a poster to open the title in Nuvio or Stremio.</string>
+    <string name="help_tip">Each row is a separate channel. If Monet shows other content, check that you picked that row’s name.</string>
+    <string name="action_close">Close</string>
+
+    <!-- Examples -->
+    <string name="seed_trending_movie">Trending today</string>
+    <string name="seed_trending_tv">Trending series</string>
+    <string name="seed_popular_movie">Popular movies</string>
+    <string name="seed_popular_tv">Popular series</string>
+    <string name="seed_top_rated">Top rated</string>
+    <string name="seed_horror">Horror</string>
+
+    <!-- Errors -->
+    <string name="error_no_key">No TMDB key. Add one in Settings.</string>
+    <string name="error_invalid_key">Invalid TMDB key</string>
+    <string name="error_rate">Too many requests to TMDB, try again later</string>
+    <string name="error_http">TMDB answered HTTP %1$d</string>
+    <string name="error_offline">No connection to TMDB</string>
+    <string name="error_bad_response">Unexpected answer from TMDB</string>
+    <string name="error_no_results">No results with these filters</string>
+    <string name="error_no_items">Nothing to publish</string>
+    <string name="error_ids_empty">Add at least one title to the list</string>
+    <string name="error_ids_none">None of these IDs were found on TMDB</string>
+    <string name="error_provider_empty">Choose at least one streaming service</string>
+    <string name="error_publish_channel">Failed to create the channel</string>
+    <string name="error_publish_empty">Nothing was published in this channel</string>
+    <string name="from_tmdb">From TMDB.</string>
+    <string name="refresh_none">No rows published</string>
+    <string name="refresh_ok">%1$d rows published</string>
+    <string name="refresh_mixed">%1$d published, %2$d failed</string>
+    <string name="refresh_no_key">Set the TMDB key in Settings</string>
+
+    <!-- Genres -->
+    <string name="genre_28">Action</string>
+    <string name="genre_12">Adventure</string>
+    <string name="genre_16">Animation</string>
+    <string name="genre_35">Comedy</string>
+    <string name="genre_80">Crime</string>
+    <string name="genre_99">Documentary</string>
+    <string name="genre_18">Drama</string>
+    <string name="genre_10751">Family</string>
+    <string name="genre_14">Fantasy</string>
+    <string name="genre_36">History</string>
+    <string name="genre_27">Horror</string>
+    <string name="genre_10402">Music</string>
+    <string name="genre_9648">Mystery</string>
+    <string name="genre_10749">Romance</string>
+    <string name="genre_878">Science Fiction</string>
+    <string name="genre_53">Thriller</string>
+    <string name="genre_10752">War</string>
+    <string name="genre_37">Western</string>
+    <string name="genre_10759">Action &amp; Adventure</string>
+    <string name="genre_10762">Kids</string>
+    <string name="genre_10763">News</string>
+    <string name="genre_10764">Reality</string>
+    <string name="genre_10765">Sci-Fi &amp; Fantasy</string>
+    <string name="genre_10766">Soap</string>
+    <string name="genre_10767">Talk</string>
+    <string name="genre_10768">War &amp; Politics</string>
+</resources>

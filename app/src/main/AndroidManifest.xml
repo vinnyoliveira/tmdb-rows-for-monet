@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <application
+        android:name=".RowsApp"
+        android:banner="@drawable/tv_banner"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="false">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Trampolim aberto pelos cards do canal; escolhe Nuvio ou Stremio. -->
+        <activity
+            android:name=".channel.OpenTitleActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@style/TrampolineTheme"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="open"
+                    android:scheme="tmdbrows" />
+            </intent-filter>
+        </activity>
+
+        <!-- Banners gerados no aparelho (backdrop + logo). Exportado sem permissão
+             de propósito: o launcher (Monet) precisa de ler as imagens. -->
+        <provider
+            android:name=".channel.BannerProvider"
+            android:authorities="com.ptvin.tmdbrows.art"
+            android:exported="true"
+            android:grantUriPermissions="true" />
+    </application>
+
+</manifest>

@@ -1,0 +1,29 @@
+# Gradle / Android
+.gradle/
+build/
+app/build/
+.kotlin/
+captures/
+
+# Local machine
+local.properties
+*.iml
+.idea/
+
+# Signing
+*.jks
+*.keystore
+keystore.properties
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Local screenshots and scratch images at the project root
+/*.png
+/*.jpg
+
+# Local build artifacts for sharing
+/dist/
+

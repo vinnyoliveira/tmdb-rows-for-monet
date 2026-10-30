@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TMDB Rows for Monet</string>
+
+    <!-- Boas-vindas -->
+    <string name="setup_title">Bem-vindo ao TMDB Rows for Monet</string>
+    <string name="setup_intro">Linhas de filmes e séries do TMDB, no launcher da sua TV.</string>
+    <string name="setup_key_title">Primeiro: a sua chave gratuita do TMDB</string>
+    <string name="setup_step1">1. Num telemóvel ou computador, abra themoviedb.org e crie uma conta gratuita.</string>
+    <string name="setup_step2">2. Abra Definições → API e copie a “API Key (v3 auth)”.</string>
+    <string name="setup_step3">3. Cole aqui em baixo e toque em Validar.</string>
+    <string name="setup_key_placeholder">Chave API (v3) ou read token (v4)</string>
+    <string name="setup_validate">Validar e começar</string>
+    <string name="setup_validating">Verificando…</string>
+    <string name="setup_invalid">O TMDB recusou esta chave. Confira se copiou tudo.</string>
+    <string name="setup_privacy">A chave fica guardada só neste aparelho.</string>
+    <string name="setup_next">Depois crie uma linha aqui e adicione-a no Monet (Personalizar → linha de mídia → TMDB Rows for Monet).</string>
+
+    <!-- Início -->
+    <plurals name="home_rows">
+        <item quantity="one">%1$d linha · %2$d publicada</item>
+        <item quantity="other">%1$d linhas · %2$d publicadas</item>
+    </plurals>
+    <string name="home_new_row">Nova linha</string>
+    <string name="home_refresh">Atualizar</string>
+    <string name="home_refreshing">Atualizando…</string>
+    <string name="home_settings">Ajustes</string>
+    <string name="home_help">?</string>
+    <string name="home_empty">Nenhuma linha ainda. Crie a primeira.</string>
+    <string name="status_error">Erro · %1$s</string>
+
+    <!-- Linhas -->
+    <string name="row_mode_filter">Filtros do TMDB</string>
+    <string name="row_mode_filter_short">Filtros</string>
+    <string name="row_mode_ids_short">Minha lista</string>
+    <string name="row_mode_platform_short">Plataforma</string>
+    <string name="row_mode_ids">Minha lista</string>
+    <string name="row_mode_platform">Plataforma de streaming</string>
+    <string name="row_custom_title">Minha lista</string>
+    <string name="row_platform_fallback">Streaming</string>
+
+    <string name="media_movie">Filmes</string>
+    <string name="media_tv">Séries</string>
+
+    <string name="section_trending_day">Em alta hoje</string>
+    <string name="section_trending_week">Em alta na semana</string>
+    <string name="section_popular">Populares</string>
+    <string name="section_top_rated">Melhor avaliados</string>
+    <string name="section_upcoming">Em breve</string>
+    <string name="section_now_playing">Em cartaz</string>
+    <string name="section_on_the_air">No ar</string>
+    <string name="section_airing_today">Hoje na TV</string>
+    <string name="section_new_series">Novas séries</string>
+    <string name="section_discover">Descobrir</string>
+
+    <string name="art_poster">Pôster 2:3</string>
+    <string name="art_backdrop">Banner 16:9</string>
+
+    <string name="sort_popularity">Mais populares</string>
+    <string name="sort_rating">Melhor nota</string>
+    <string name="sort_newest">Mais recentes</string>
+    <string name="sort_random">Aleatório (muda a cada atualização)</string>
+
+
+
+    <string name="summary_rating">nota %1$s+</string>
+    <string name="summary_year">%1$d+</string>
+    <plurals name="summary_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d itens</item>
+    </plurals>
+    <string name="channel_description">Linha do TMDB · %1$s</string>
+
+    <!-- Editor -->
+    <string name="editor_title_new">Nova linha</string>
+    <string name="editor_title_edit">Editar linha</string>
+    <string name="editor_subtitle">Prévia à direita. Salvar publica no Monet.</string>
+    <string name="label_title">Título</string>
+    <string name="label_mode">Origem</string>
+    <string name="label_type">Tipo</string>
+    <string name="label_section">Seção</string>
+    <string name="label_sort">Ordenar por</string>
+    <string name="label_min_rating">Nota mínima</string>
+    <string name="value_any">qualquer</string>
+    <string name="label_year">Ano mínimo</string>
+    <string name="label_items">Itens na linha</string>
+    <string name="label_art">Arte</string>
+    <string name="cover_title">Nome da linha no primeiro cartão</string>
+    <string name="cover_help">Um terço da imagem com o nome da linha, na vertical, sobre um fundo aleatório.</string>
+    <string name="label_genres">Gêneros (qualquer um)</string>
+    <string name="label_provider">Plataforma</string>
+    <string name="provider_search">Pesquisar plataforma</string>
+    <string name="badge_new">NOVO</string>
+    <string name="label_ids">Títulos por ID do TMDB</string>
+    <string name="ids_placeholder">550, 1399 ou um link do themoviedb.org</string>
+    <string name="ids_hint">Um por linha. Também aceita links do site.</string>
+    <string name="action_add">Adicionar</string>
+    <string name="action_adding">Adicionando…</string>
+    <string name="label_list">Sua lista</string>
+    <string name="list_empty">Nenhum título ainda. Adicione um ID ou pesquise pelo nome.</string>
+    <string name="action_remove">Remover</string>
+    <string name="label_search">Pesquisar no TMDB</string>
+    <string name="search_placeholder">Título, ex.: Ainda Estou Aqui</string>
+    <string name="action_search">Pesquisar</string>
+    <string name="search_empty">Nada encontrado.</string>
+    <string name="search_hint">Escolha um título e toque em Adicionar.</string>
+    <string name="action_save">Salvar e publicar</string>
+    <string name="action_publishing">Publicando…</string>
+    <string name="action_delete">Excluir</string>
+    <string name="action_confirm_delete">Confirmar exclusão</string>
+    <string name="hint_delete_again">Toque de novo para excluir esta linha.</string>
+    <string name="preview_title">Prévia</string>
+    <string name="preview_loading">Buscando no TMDB…</string>
+    <string name="preview_count">%1$d títulos · %2$s</string>
+    <string name="text_field_hint">Toque em OK para escrever</string>
+    <string name="text_field_editing">◀ ▶ move o cursor · ▼ sai do campo</string>
+    <string name="untitled">Sem título</string>
+    <string name="editor_advanced">Filtros avançados</string>
+    <string name="label_opener">Abrir em</string>
+    <string name="opener_default">Padrão (%1$s)</string>
+
+    <!-- Ajustes -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_version">versão %1$s</string>
+    <string name="panel_key">Chave do TMDB</string>
+    <string name="key_help">Cole a sua chave. Crie uma gratuita em themoviedb.org → Definições → API.</string>
+    <string name="action_save_key">Salvar chave</string>
+    <string name="action_validating">Validando…</string>
+    <string name="key_saved">Chave salva e validada.</string>
+    <string name="key_saved_invalid">Chave salva, mas o TMDB recusou. Confira.</string>
+    <string name="app_language_title">Idioma da app</string>
+    <string name="app_language_system">Sistema</string>
+    <string name="app_language_hint">Muda os textos desta app. Títulos e pôsteres têm ajuste próprio.</string>
+    <string name="panel_language">Pôsteres e títulos</string>
+    <string name="language_help">Idioma dos títulos e da arte. Automático segue este aparelho.</string>
+    <string name="language_auto">Automático (%1$s)</string>
+    <string name="language_show_all">Todos os idiomas</string>
+    <string name="language_show_less">Menos idiomas</string>
+    <string name="language_saved">Idioma salvo. Atualize para aplicar.</string>
+    <string name="panel_opener">Ao tocar num pôster</string>
+    <string name="panel_art">Arte</string>
+    <string name="better_posters_title">Capas BetterPosters</string>
+    <string name="better_posters_help">Opcional. Cartazes 2:3 com o título na imagem, do btttr.cc, no idioma de arte escolhido acima.</string>
+    <string name="better_posters_note">Só para Póster 2:3. Serviço de terceiros: precisa de internet e pode mudar ou sair do ar; sem ele usa o póster do TMDB.</string>
+    <string name="panel_refresh">Sincronização</string>
+    <string name="sync_title">Sincronização automática</string>
+    <string name="sync_help">Desligada: nada corre em segundo plano. As linhas só mudam quando tocar em Atualizar.</string>
+    <string name="refresh_every">Recriar os canais a cada</string>
+    <string name="action_refresh_now">Atualizar agora</string>
+    <string name="action_back">Voltar</string>
+    <string name="panel_about">Sobre</string>
+    <string name="about_text">Usa a API do TMDB. Não é endossado nem certificado pelo TMDB.</string>
+
+    <!-- Ajuda -->
+    <string name="help_title">Como funciona</string>
+    <string name="help_step1">1. Crie uma linha: filtros do TMDB, uma plataforma ou a sua lista.</string>
+    <string name="help_step2">2. Toque em Salvar e publicar. A linha vira um canal no aparelho.</string>
+    <string name="help_step3">3. No Monet: Personalizar → linha de mídia → TMDB Rows for Monet → escolha a linha pelo nome.</string>
+    <string name="help_step4">4. Toque num pôster para abrir o título no Nuvio ou no Stremio.</string>
+    <string name="help_tip">Cada linha é um canal separado. Se o Monet mostrar outro conteúdo, confira se escolheu o nome dessa linha.</string>
+    <string name="action_close">Fechar</string>
+
+    <!-- Exemplos -->
+    <string name="seed_trending_movie">Em alta hoje</string>
+    <string name="seed_trending_tv">Séries em alta</string>
+    <string name="seed_popular_movie">Filmes populares</string>
+    <string name="seed_popular_tv">Séries populares</string>
+    <string name="seed_top_rated">Melhor avaliados</string>
+    <string name="seed_horror">Terror</string>
+
+    <!-- Erros -->
+    <string name="error_no_key">Sem chave do TMDB. Configure em Ajustes.</string>
+    <string name="error_invalid_key">Chave do TMDB inválida</string>
+    <string name="error_rate">Muitos pedidos ao TMDB, tente mais tarde</string>
+    <string name="error_http">TMDB respondeu HTTP %1$d</string>
+    <string name="error_offline">Sem conexão com o TMDB</string>
+    <string name="error_bad_response">Resposta inesperada do TMDB</string>
+    <string name="error_no_results">Nenhum resultado com esses filtros</string>
+    <string name="error_no_items">Nenhum item para publicar</string>
+    <string name="error_ids_empty">Adicione pelo menos um título à lista</string>
+    <string name="error_ids_none">Nenhum destes IDs foi encontrado no TMDB</string>
+    <string name="error_provider_empty">Escolha pelo menos uma plataforma</string>
+    <string name="error_publish_channel">Falha ao criar o canal</string>
+    <string name="error_publish_empty">Nada foi publicado no canal</string>
+    <string name="from_tmdb">Do TMDB.</string>
+    <string name="refresh_none">Nenhuma linha publicada</string>
+    <string name="refresh_ok">%1$d linhas publicadas</string>
+    <string name="refresh_mixed">%1$d publicadas, %2$d com erro</string>
+    <string name="refresh_no_key">Configure a chave do TMDB em Ajustes</string>
+
+    <!-- Gêneros -->
+    <string name="genre_28">Ação</string>
+    <string name="genre_12">Aventura</string>
+    <string name="genre_16">Animação</string>
+    <string name="genre_35">Comédia</string>
+    <string name="genre_80">Crime</string>
+    <string name="genre_99">Documentário</string>
+    <string name="genre_18">Drama</string>
+    <string name="genre_10751">Família</string>
+    <string name="genre_14">Fantasia</string>
+    <string name="genre_36">História</string>
+    <string name="genre_27">Terror</string>
+    <string name="genre_10402">Música</string>
+    <string name="genre_9648">Mistério</string>
+    <string name="genre_10749">Romance</string>
+    <string name="genre_878">Ficção científica</string>
+    <string name="genre_53">Suspense</string>
+    <string name="genre_10752">Guerra</string>
+    <string name="genre_37">Faroeste</string>
+    <string name="genre_10759">Ação &amp; Aventura</string>
+    <string name="genre_10762">Infantil</string>
+    <string name="genre_10763">Notícias</string>
+    <string name="genre_10764">Reality show</string>
+    <string name="genre_10765">Ficção e fantasia</string>
+    <string name="genre_10766">Novela</string>
+    <string name="genre_10767">Talk show</string>
+    <string name="genre_10768">Guerra &amp; Política</string>
+</resources>

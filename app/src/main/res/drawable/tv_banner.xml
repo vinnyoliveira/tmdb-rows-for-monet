@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+
+    <path
+        android:fillColor="#0D0F14"
+        android:pathData="M0,0h320v180h-320z" />
+
+    <!-- Três pôsteres verticais: identidade do app. -->
+    <path
+        android:fillColor="#2E4483"
+        android:pathData="M40,34h64v112h-64z" />
+    <path
+        android:fillColor="#4A5FA8"
+        android:pathData="M116,34h64v112h-64z" />
+    <path
+        android:fillColor="#6E82CC"
+        android:pathData="M192,34h64v112h-64z" />
+
+    <path
+        android:fillColor="#B7C4FF"
+        android:pathData="M276,34h4v112h-4z" />
+</vector>
